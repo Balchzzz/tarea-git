@@ -1,29 +1,31 @@
-palabra_secreta = "python"
-letras_adivinadas = []
-intentos = 6
+# ahorcado.py - Versión de la Cuenta B
+palabra = "chile"
+adivinadas = []
+vidas = 5
 
-print("--- JUEGO DEL AHORCADO ---")
+print("¡Bienvenido al Ahorcado de Puente Alto! 🇨🇱")
+print("Intenta adivinar la palabra secreta.")
 
-while intentos > 0:
-    estado = ""
-    for letra in palabra_secreta:
-        if letra in letras_adivinadas:
-            estado += letra
-        else:
-            estado += "_"
+while vidas > 0:
+    progreso = [l if l in adivinadas else "_" for l in palabra]
+    print(f"\nTu progreso: {' '.join(progreso)}")
+    print(f"Letras que ya probaste: {', '.join(adivinadas)}")
     
-    print(f"\nPalabra: {estado}")
-    print(f"Intentos restantes: {intentos}")
-    
-    if "_" not in estado:
-        print("¡Ganaste!")
+    if "_" not in progreso:
+        print("¡Excelente! ¡Ganaste el juego! 🎉")
         break
         
-    letra = input("Ingresa una letra: ").lower()
-    letras_adivinadas.append(letra)
+    letra = input("👉 ¿Qué letra quieres probar?: ").lower()
     
-    if letra not in palabra_secreta:
-        intentos -= 1
+    if letra in adivinadas:
+        print("⚠️ Ya usaste esa letra, ¡intenta con otra!")
+        continue
+        
+    adivinadas.append(letra)
+    
+    if letra not in palabra:
+        vidas -= 1
+        print(f"❌ La letra '{letra}' no está. Te quedan {vidas} vidas.")
 
-if intentos == 0:
-    print(f"Perdiste. La palabra era: {palabra_secreta}")
+if vidas == 0:
+    print(f"💀 ¡Oh no! Te quedaste sin vidas. La palabra era: {palabra}")
